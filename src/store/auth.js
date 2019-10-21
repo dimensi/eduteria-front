@@ -16,7 +16,7 @@ const $user = createStore(null)
 const $isAuth = $user.map(Boolean)
 
 const $inCheckingAuth = createStore(true)
-  .on(merge([fxCheckLogin, fxLogin]), () => true)
+  .on(merge([fxCheckLogin, fxLogin, fxRegistration]), () => true)
   .on(merge([fxCheckLogin.done, fxLogin.done]), () => false)
 
 export const $authStore = createStoreObject({
