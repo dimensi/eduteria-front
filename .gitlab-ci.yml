@@ -21,4 +21,4 @@ build_image:
     - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:build-$CI_PIPELINE_IID --tag $CI_REGISTRY_IMAGE:latest .
     - docker push $CI_REGISTRY_IMAGE:build-$CI_PIPELINE_IID
     - docker push $CI_REGISTRY_IMAGE:latest
-    - ssh dimensi@51.158.105.88 'docker pull registry.gitlab.com/dimensi/record-moretech-front && docker stop front && docker rm front && docker run -d --restart unless-stopped --name front -p 3000:80 registry.gitlab.com/dimensi/record-moretech-front'
+    - ssh dimensi@51.158.105.88 'docker pull registry.gitlab.com/dimensi/eduteria-front && docker stop front && docker rm front && docker run -d --restart unless-stopped --name front -p 3000:80 registry.gitlab.com/dimensi/eduteria-front'

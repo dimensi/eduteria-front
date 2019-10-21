@@ -4,7 +4,6 @@ import { Layout, Menu, Icon } from 'antd'
 import { fxLogout } from 'src/store/auth'
 
 const { Sider } = Layout
-const { SubMenu } = Menu
 
 function useMode(key, initialValue) {
   const [mode, setMode] = useState(() => {
