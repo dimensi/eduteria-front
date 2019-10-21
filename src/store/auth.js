@@ -1,4 +1,4 @@
-import { createEvent, createEffect, sample, createStore, merge, createStoreObject } from 'effector'
+import { createEvent, createEffect, createStore, merge, createStoreObject, forward } from 'effector'
 
 import * as auth from 'src/api/auth'
 
@@ -25,7 +25,7 @@ export const $authStore = createStoreObject({
   inCheckingAuth: $inCheckingAuth,
 })
 
-sample(fxLogout.done, reset)
-sample(fxRegistration.done, fxCheckLogin)
+forward({ from: fxLogout.done, to: reset })
+forward({ from: fxRegistration.done, to: fxCheckLogin })
 
 fxCheckLogin()
