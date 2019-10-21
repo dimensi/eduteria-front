@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { useStore } from 'effector-react'
+import { Switch, Redirect, Route, useRouteMatch } from 'react-router-dom'
+import { Spin } from 'antd'
+
+import { $authStore } from 'src/store/auth'
+import { Login } from 'src/views/Login'
+import { DefaultLayout } from 'src/components/DefaultLayout'
 
 function App() {
+  const { inCheckingAuth, isAuth, user } = useStore($authStore)
+  const isLogin = useRouteMatch('/login')
+  console.log(user)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <DefaultLayout hideSider={inCheckingAuth || isLogin}>
+      {inCheckingAuth && (
+        <div className='loader'>
+          <Spin size='large' />
+        </div>
+      )}
+      <Switch>
+        {!isAuth && !inCheckingAuth && (
+          <>
+            <Redirect to='/login' />
+            <Route path='/login' component={Login} />
+          </>
+        )}
+        {isAuth && !inCheckingAuth && (
+          <>
+            <Redirect from='/login' to='/' />
+            <Redirect from='/registration' to='/' />
+          </>
+        )}
+      </Switch>
+    </DefaultLayout>
+  )
 }
 
-export default App;
+export default App

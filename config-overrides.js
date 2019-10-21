@@ -4,6 +4,7 @@ const {
   disableEsLint,
   addPostcssPlugins,
   addBabelPlugins,
+  fixBabelImports,
 } = require('customize-cra')
 const path = require('path')
 
@@ -27,5 +28,6 @@ module.exports = override(
   ...addBabelPlugins(
     '@babel/plugin-proposal-optional-chaining',
     '@babel/plugin-proposal-nullish-coalescing-operator'
-  )
+  ),
+  fixBabelImports('antd', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' })
 )

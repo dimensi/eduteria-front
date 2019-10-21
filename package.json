@@ -2,14 +2,22 @@
   "name": "eduteria",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://moretech.dimensi.dev/",
   "dependencies": {
+    "@emotion/core": "^10.0.21",
+    "@emotion/styled": "^10.0.17",
+    "antd": "^3.24.2",
     "axios": "^0.19.0",
+    "crypto-js": "^3.1.9-1",
     "effector": "^20.4.2",
     "effector-react": "^20.4.0",
+    "final-form": "^4.18.5",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-final-form": "^6.3.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -34,7 +42,9 @@
     "@babel/core": "^7.6.4",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.4.4",
     "@babel/plugin-proposal-optional-chaining": "^7.6.0",
+    "@types/react-router-dom": "^5.1.0",
     "babel-eslint": "^10.0.3",
+    "babel-plugin-import": "^1.12.2",
     "customize-cra": "^0.8.0",
     "eslint-config-prettier": "^6.4.0",
     "eslint-config-standard": "^14.1.0",
