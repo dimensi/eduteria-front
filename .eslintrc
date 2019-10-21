@@ -1,0 +1,40 @@
+{
+  "extends": ["standard", "standard-react", "prettier", "prettier/standard"],
+  "plugins": ["prettier", "react", "react-hooks"],
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [["src", "./src"]],
+        "extensions": [".ts", ".js", ".jsx", ".json", ".scss"]
+      },
+      "node": {
+        "extensions": [".ts", ".js", ".jsx", ".json", ".scss"]
+      }
+    }
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "comma-dangle": ["error", "always-multiline"],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/prop-types": 0,
+    "import/order": [
+      "warn",
+      {
+        "groups": [["builtin", "external"], "internal", ["parent", "sibling", "index"]],
+        "newlines-between": "always"
+      }
+    ]
+  }
+}
