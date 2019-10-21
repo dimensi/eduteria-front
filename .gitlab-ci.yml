@@ -1,0 +1,24 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+before_script:
+  - apk update
+  - apk add openssh
+  # Setup SSH deploy keys
+  - eval $(ssh-agent -s)
+  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  - docker info
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+build_image:
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:build-$CI_PIPELINE_IID --tag $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:build-$CI_PIPELINE_IID
+    - docker push $CI_REGISTRY_IMAGE:latest
+    - ssh dimensi@51.158.105.88 'docker pull registry.gitlab.com/dimensi/record-moretech-front && docker stop front && docker rm front && docker run -d --restart unless-stopped --name front -p 3000:80 registry.gitlab.com/dimensi/record-moretech-front'
