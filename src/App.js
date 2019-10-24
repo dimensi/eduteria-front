@@ -8,9 +8,8 @@ import { Login } from 'src/views/Login'
 import { DefaultLayout } from 'src/components/DefaultLayout'
 
 function App() {
-  const { inCheckingAuth, isAuth, user } = useStore($authStore)
+  const { inCheckingAuth, isAuth } = useStore($authStore)
   const isLogin = useRouteMatch('/login')
-  console.log(user)
   return (
     <DefaultLayout hideSider={inCheckingAuth || isLogin}>
       {inCheckingAuth && (

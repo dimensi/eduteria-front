@@ -2,7 +2,7 @@
   "name": "eduteria",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://moretech.dimensi.dev/",
+  "proxy": "https://eduteria.ru/",
   "dependencies": {
     "@emotion/core": "^10.0.21",
     "@emotion/styled": "^10.0.17",

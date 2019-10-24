@@ -1,13 +1,14 @@
-import { Form, Icon, Input, Button, Checkbox } from 'antd'
+import { Form, Icon, Input, Button } from 'antd'
 import { Form as FinalForm, Field } from 'react-final-form'
 import styled from '@emotion/styled'
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core'
 import { NavLink } from 'react-router-dom'
-import { useCallback } from 'react'
+import * as yup from 'yup'
 
 import { fxLogin } from 'src/store/auth'
 import { FieldInterop } from 'src/components/FieldInterop'
+import { useValidationSchema } from 'src/helpers/yup'
 
 const LoginContainer = styled.div`
   width: 100%;
@@ -17,10 +18,20 @@ const LoginContainer = styled.div`
   align-items: center;
   justify-content: center;
 `
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email()
+    .required(),
+  password: yup.string().required(),
+})
+
 export function Login() {
+  const validation = useValidationSchema(schema)
   return (
     <LoginContainer>
-      <FinalForm onSubmit={fxLogin}>
+      <FinalForm onSubmit={fxLogin} validate={validation}>
         {({ handleSubmit }) => (
           <Form
             css={css`
@@ -28,30 +39,22 @@ export function Login() {
             `}
             onSubmit={handleSubmit}
           >
+            <Field
+              name='email'
+              component={FieldInterop}
+              as={Input}
+              prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder='Email'
+            />
+            <Field
+              name='password'
+              component={FieldInterop}
+              as={Input.Password}
+              prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
+              type='password'
+              placeholder='Password'
+            />
             <Form.Item>
-              <Field
-                name='email'
-                component={FieldInterop}
-                as={Input}
-                prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder='Email'
-              />
-            </Form.Item>
-            <Form.Item>
-              <Field
-                name='password'
-                component={FieldInterop}
-                as={Input.Password}
-                prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
-                type='password'
-                placeholder='Password'
-              />
-            </Form.Item>
-            <Form.Item>
-              <Checkbox>Remember me</Checkbox>
-              <a className='login-form-forgot' href=''>
-                Forgot password
-              </a>
               <Button
                 type='primary'
                 htmlType='submit'
@@ -61,7 +64,7 @@ export function Login() {
               >
                 Log in
               </Button>
-              Or <NavLink to='/register'>register now!</NavLink>
+              Or <NavLink to='/register'>register.</NavLink>
             </Form.Item>
           </Form>
         )}
