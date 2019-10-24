@@ -3,6 +3,7 @@ import { createEvent, createEffect, createStore, merge, createStoreObject, forwa
 import * as auth from 'src/api/auth'
 
 const reset = createEvent()
+const resetError = createEvent()
 
 export const fxLogin = createEffect().use(auth.login)
 export const fxLogout = createEffect().use(auth.logout)
@@ -19,12 +20,17 @@ const $inCheckingAuth = createStore(true)
   .on(merge([fxCheckLogin, fxLogin, fxRegistration]), () => true)
   .on(merge([fxCheckLogin.done, fxLogin.done]), () => false)
 
+export const $error = createStore(null)
+  .on(merge([fxLogin.fail, fxRegistration.fail]), (_, { error }) => error)
+  .reset(resetError)
+
 export const $authStore = createStoreObject({
   user: $user,
   isAuth: $isAuth,
   inCheckingAuth: $inCheckingAuth,
 })
 
+forward({ from: merge([fxLogin, fxRegistration]), to: resetError })
 forward({ from: fxLogout.done, to: reset })
 forward({ from: fxRegistration.done, to: fxCheckLogin })
 

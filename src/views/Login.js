@@ -45,6 +45,7 @@ export function Login() {
               as={Input}
               prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
               placeholder='Email'
+              type='email'
             />
             <Field
               name='password'
@@ -64,7 +65,7 @@ export function Login() {
               >
                 Log in
               </Button>
-              Or <NavLink to='/register'>register.</NavLink>
+              Or <NavLink to='/registration'>register.</NavLink>
             </Form.Item>
           </Form>
         )}
