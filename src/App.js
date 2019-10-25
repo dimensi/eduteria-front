@@ -1,12 +1,13 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { Switch, Redirect, Route, useRouteMatch } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Redirect, Route, useRouteMatch } from 'react-router-dom'
 import { Spin } from 'antd'
 
 import { $authStore } from 'src/store/auth'
 import { Login } from 'src/views/Login'
 import { DefaultLayout } from 'src/components/DefaultLayout'
 import { Registration } from 'src/views/Registration'
+import { Player } from 'src/features/Player'
 
 function App() {
   const { inCheckingAuth, isAuth } = useStore($authStore)
@@ -27,15 +28,20 @@ function App() {
             <Route path='/registration' component={Registration} />
           </>
         )}
-        {isAuth && !inCheckingAuth && (
+        {isAuth && !inCheckingAuth && (isLogin || isRegistration) && (
           <>
             <Redirect from='/login' to='/' />
             <Redirect from='/registration' to='/' />
           </>
         )}
+        <Route path='/play/:id' component={Player} />
       </Switch>
     </DefaultLayout>
   )
 }
 
-export default App
+export default () => (
+  <Router>
+    <App />
+  </Router>
+)

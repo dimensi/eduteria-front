@@ -1,0 +1,6 @@
+{
+  "path-autocomplete.pathMappings": {
+    "src": "${folder}/src"
+  },
+  "javascript.validate.enable": false,
+}

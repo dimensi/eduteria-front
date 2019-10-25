@@ -5,6 +5,7 @@ const {
   addPostcssPlugins,
   addBabelPlugins,
   fixBabelImports,
+  addBabelPresets,
 } = require('customize-cra')
 const path = require('path')
 
@@ -29,5 +30,6 @@ module.exports = override(
     '@babel/plugin-proposal-optional-chaining',
     '@babel/plugin-proposal-nullish-coalescing-operator'
   ),
+  ...addBabelPresets('@emotion/babel-preset-css-prop'),
   fixBabelImports('antd', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' })
 )

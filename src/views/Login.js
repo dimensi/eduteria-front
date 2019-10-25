@@ -1,8 +1,7 @@
 import { Form, Icon, Input, Button } from 'antd'
 import { Form as FinalForm, Field } from 'react-final-form'
 import styled from '@emotion/styled'
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core'
+import { css } from '@emotion/core'
 import { NavLink } from 'react-router-dom'
 import * as yup from 'yup'
 

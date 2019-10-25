@@ -22,8 +22,14 @@ export function DefaultLayout({ children, hideSider }) {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       {!hideSider && (
-        <Sider collapsible collapsed={isCollapsed} onCollapse={setCollapse}>
-          <div className='logo'>EduTeria</div>
+        <Sider
+          collapsible
+          collapsed={isCollapsed}
+          onCollapse={setCollapse}
+          breakpoint='lg'
+          collapsedWidth='0'
+        >
+          <div className='logo'>{isCollapsed ? 'Edu' : 'EduTeria'}</div>
           <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline'>
             <Menu.Item key='1'>
               <Icon type='pie-chart' />
