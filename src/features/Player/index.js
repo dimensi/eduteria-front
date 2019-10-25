@@ -17,18 +17,18 @@ export function Player({
     params: { id },
   },
 }) {
-  const presentation = useStore($presentationStore)
-  console.log(presentation)
+  const store = useStore($presentationStore)
+  console.log(store)
   return (
     <Layout.Content>
       <PlayerGate id={id} />
-      {!presentation.loading && (
+      {!store.loading && store.presentation && (
         <>
           <PageHeader
             css={{
               border: '1px solid rgb(235, 237, 240)',
             }}
-            title={presentation.name}
+            title={store.presentation.name}
           />
           <Wrapper>
             <ControlContainer />
