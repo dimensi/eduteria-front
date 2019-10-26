@@ -10,10 +10,10 @@ const mapWidgets = {
   Button: ButtonWidget,
 }
 
-export function WidgetRender({ widgets }) {
+export function WidgetRender({ widgets, playState }) {
   return widgets.map(widget => {
     const Tag = mapWidgets[widget.WidgetType]
-    if (!Tag) return <div key={widget.WidgetID}>hi</div>
+    if (!Tag) return null
     return <Tag key={widget.WidgetID} {...widget} css={css(widget.Css)} />
   })
 }

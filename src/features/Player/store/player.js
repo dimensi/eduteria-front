@@ -1,6 +1,6 @@
-import { createEvent, combine, createStore, guard, sample, forward } from 'effector'
+import { createEvent, combine, createStore, guard, sample, forward, merge } from 'effector'
 
-import { $presentation } from './index'
+import { $presentation, PlayerGate } from './index'
 
 export const played = createEvent()
 export const stopped = createEvent()
@@ -90,5 +90,15 @@ sample({
     filter: index => index === null,
   }),
   fn: pres => pres.startId,
+  target: forwarded,
+})
+
+sample({
+  source: PlayerGate.state,
+  clock: guard({
+    source: PlayerGate.state,
+    filter: state => Boolean(state.slide),
+  }),
+  fn: state => Number(state.slide),
   target: forwarded,
 })

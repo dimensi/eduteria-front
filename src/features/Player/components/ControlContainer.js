@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-handler-names */
 import React, { useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
 import { css, Global } from '@emotion/core'
@@ -164,6 +165,7 @@ export function ControlContainer() {
       screenfull.exit()
     }
   }, [isInFullScreen])
+  console.log('current slide', slide, playing)
   return (
     <Container
       style={{ background: playing !== 'initial' && 'black' }}
@@ -185,7 +187,7 @@ export function ControlContainer() {
       <AspectRationContainer>
         {slide?.Widgets && (
           <WidgetHolder>
-            <WidgetRender widgets={slide.Widgets} />
+            <WidgetRender widgets={slide.Widgets} playState={playing} />
           </WidgetHolder>
         )}
       </AspectRationContainer>
