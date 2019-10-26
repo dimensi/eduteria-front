@@ -13,7 +13,7 @@ const mapWidgets = {
 export function WidgetRender({ widgets, playState }) {
   return widgets.map(widget => {
     const Tag = mapWidgets[widget.WidgetType]
-    if (!Tag) return null
+    if (playState === 'initial' && widget.WidgetType !== 'Video') return null
     return <Tag key={widget.WidgetID} {...widget} css={css(widget.Css)} />
   })
 }
