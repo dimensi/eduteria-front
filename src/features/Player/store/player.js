@@ -9,6 +9,8 @@ const toBacked = createEvent()
 export const forwarded = createEvent()
 export const fullScreenEntered = createEvent()
 export const fullScreenExited = createEvent()
+export const muted = createEvent()
+export const unmuted = createEvent()
 
 export const $playing = createStore('initial')
   .on(played, () => 'play')
@@ -19,6 +21,10 @@ export const $slideIndex = createStore(null).on(forwarded, (_, payload) => paylo
 export const $currentSlide = combine($presentation, $slideIndex, (pres, id) =>
   pres?.slides.find(slide => slide.SlideID === id)
 )
+
+export const $muted = createStore(false)
+  .on(muted, () => true)
+  .on(unmuted, () => false)
 
 export const $fullScreen = createStore(false)
   .on(fullScreenEntered, () => true)
@@ -33,17 +39,23 @@ const $listOfControls = combine(
   $currentSlide,
   $history,
   $fullScreen,
-  (playing, slide, history, fullScreen) => ({
+  $muted,
+  (playing, slide, history, fullScreen, isMuted) => ({
     playing,
     nextID: slide?.NextSlideID,
     history,
     fullScreen,
+    isMuted,
   })
-).map(({ playing, nextID, history, fullScreen }) =>
+).map(({ playing, nextID, history, fullScreen, isMuted }) =>
   [
     history.length > 1 && { type: 'backward', event: backwarded },
     { type: playing, event: playing === 'pause' ? played : stopped },
     nextID != null && { type: 'forward', event: () => forwarded(nextID) },
+    {
+      type: isMuted ? 'mute' : 'volume',
+      event: isMuted ? unmuted : muted,
+    },
     {
       type: fullScreen ? 'fullScreenExit' : 'fullScreenEnter',
       event: fullScreen ? fullScreenExited : fullScreenEntered,
@@ -52,7 +64,7 @@ const $listOfControls = combine(
 )
 
 const onLeft = ['backward', 'play', 'pause', 'forward']
-const onRight = ['fullScreenExit', 'fullScreenEnter']
+const onRight = ['fullScreenExit', 'fullScreenEnter', 'mute', 'volume']
 
 export const $leftControls = $listOfControls.map(state =>
   state.filter(({ type }) => onLeft.includes(type))

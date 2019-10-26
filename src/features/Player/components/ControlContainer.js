@@ -123,6 +123,8 @@ const controls = {
   backward: { Icon: BackwardIcon },
   fullScreenExit: { Icon: ExitFullScreenIcon },
   fullScreenEnter: { Icon: EnterFullScreenIcon },
+  mute: { Icon: MuteIcon },
+  volume: { Icon: VolumeIcon },
 }
 
 const SideControls = ({ store }) =>

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
 import { useStore } from 'effector-react'
 
-import { $playing } from 'src/features/Player/store/player'
+import { $playing, $muted } from 'src/features/Player/store/player'
 
 const Video = styled.video`
   position: absolute;
@@ -12,16 +12,29 @@ const Video = styled.video`
 
 export function VideoWidget({ Source: { Src, ContentType }, WidgetID, className }) {
   const playing = useStore($playing)
+  const isMuted = useStore($muted)
   const ref = useRef(null)
+  const promise = useRef(null)
   useEffect(() => {
     if (!ref.current) return
-    if (playing === 'play') {
-      ref.current.play()
+    if (playing === 'play' && ref.current.paused) {
+      promise.current = ref.current.play()
+      promise.current.then(() => {
+        promise.current = null
+      })
     }
-    if (playing === 'pause') {
-      ref.current.pause()
+    if (playing === 'pause' && !ref.current.paused) {
+      if (promise.current) {
+        promise.current.then(() => {
+          promise.current = null
+          ref.current.pause()
+        })
+      } else {
+        ref.current.pause()
+      }
     }
-  }, [playing])
+    ref.current.muted = isMuted
+  }, [playing, isMuted])
   return (
     <Video controls={false} key={WidgetID} className={className} ref={ref}>
       <source src={Src} type={ContentType} />
