@@ -8,8 +8,9 @@ import { Login } from 'src/views/Login'
 import { DefaultLayout } from 'src/components/DefaultLayout'
 import { Registration } from 'src/views/Registration'
 import { Player } from 'src/features/Player'
+import { VideoPage } from 'src/views/VideoPage'
 
-function App() {
+function PagesWithLayout() {
   const { inCheckingAuth, isAuth } = useStore($authStore)
   const isLogin = useRouteMatch('/login')
   const isRegistration = useRouteMatch('/registration')
@@ -20,23 +21,29 @@ function App() {
           <Spin size='large' />
         </div>
       )}
-      <Switch>
-        {!isAuth && !inCheckingAuth && (
-          <>
-            {!isLogin && !isRegistration && <Redirect to='/login' />}
-            <Route path='/login' component={Login} />
-            <Route path='/registration' component={Registration} />
-          </>
-        )}
-        {isAuth && !inCheckingAuth && (isLogin || isRegistration) && (
-          <>
-            <Redirect from='/login' to='/' />
-            <Redirect from='/registration' to='/' />
-          </>
-        )}
-        <Route path='/play/:id' component={Player} />
-      </Switch>
+      {!isAuth && !inCheckingAuth && (
+        <>
+          {!isLogin && !isRegistration && <Redirect to='/login' />}
+          <Route path='/login' component={Login} />
+          <Route path='/registration' component={Registration} />
+        </>
+      )}
+      {isAuth && !inCheckingAuth && (isLogin || isRegistration) && (
+        <>
+          <Redirect from='/login' to='/' />
+          <Redirect from='/registration' to='/' />
+        </>
+      )}
+      <Route path='/video/:id' component={VideoPage} />
     </DefaultLayout>
+  )
+}
+function App() {
+  return (
+    <Switch>
+      <Route path='/play/:id' component={Player} />
+      <PagesWithLayout />
+    </Switch>
   )
 }
 

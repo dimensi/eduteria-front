@@ -8,11 +8,7 @@ import {
   played,
   $currentSlide,
   $playing,
-  $history,
   $fullScreen,
-  fullScreenEntered,
-  fullScreenExited,
-  $controls,
   $leftControls,
   $rightControls,
 } from '../store/player'
@@ -27,14 +23,14 @@ import { ReactComponent as ExitFullScreenIcon } from '../assets/exit-fullscreen.
 import { WidgetRender } from './WidgetRender'
 
 const Container = styled.div`
-  overflow: hidden;
-  border-radius: 4px;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-  background: 'white';
+  background: white;
   position: relative;
+  overflow: hidden;
+  display: flex;
+  align-content: center;
 `
 
-const AspectRationContainer = styled.div`
+export const AspectRationContainer = styled.div`
   position: relative;
   padding-top: 56.25%;
   width: 100%;
