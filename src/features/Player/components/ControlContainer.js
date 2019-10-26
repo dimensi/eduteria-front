@@ -145,8 +145,9 @@ export function ControlContainer() {
     if (!contrainerRef.current) return
     if (isInFullScreen && screenfull.isEnabled) {
       screenfull.request(contrainerRef.current)
-    } else {
-      screenfull.exit(contrainerRef.current)
+    }
+    if (!isInFullScreen && screenfull.isEnabled) {
+      screenfull.exit()
     }
   }, [isInFullScreen])
   return (
