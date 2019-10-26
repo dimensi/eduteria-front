@@ -103,6 +103,15 @@ const BigPlay = css`
   }
 `
 
+const BigPlayContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+`
+
 const Control = styled.button`
   background: transparent;
   padding: 0;
@@ -155,7 +164,6 @@ export function ControlContainer() {
       screenfull.exit()
     }
   }, [isInFullScreen])
-  console.log(screenfull.isEnabled)
   return (
     <Container
       style={{ background: playing !== 'initial' && 'black' }}
@@ -182,9 +190,11 @@ export function ControlContainer() {
         )}
       </AspectRationContainer>
       {['pause', 'initial'].includes(playing) && (
-        <Control css={BigPlay} onClick={played}>
-          <PlayIcon />
-        </Control>
+        <BigPlayContainer onClick={played}>
+          <Control css={BigPlay}>
+            <PlayIcon />
+          </Control>
+        </BigPlayContainer>
       )}
       {playing !== 'initial' && (
         <ControlsHolder>
