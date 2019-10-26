@@ -42,7 +42,7 @@ function App() {
   return (
     <Switch>
       <Route path='/play/:id' component={Player} />
-      <PagesWithLayout />
+      <Route component={PagesWithLayout} />
     </Switch>
   )
 }

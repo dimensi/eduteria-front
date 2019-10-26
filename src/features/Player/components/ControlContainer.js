@@ -83,12 +83,19 @@ const BigPlay = css`
   bottom: 0;
   margin: auto;
   overflow: hidden;
-  width: 50px;
-  height: 50px;
   background-color: rgba(0, 179, 255, 0.8);
   color: white;
   border-radius: 50%;
-  padding: 10px 8px 8px 12px;
+  @media (min-width: 701px) {
+    width: 50px;
+    height: 50px;
+    padding: 10px 8px 8px 12px;
+  }
+  @media (max-width: 700px) {
+    width: 50px;
+    height: 50px;
+    padding: 10px 8px 8px 12px;
+  }
 `
 
 const Control = styled.button`
