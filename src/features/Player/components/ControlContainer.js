@@ -29,6 +29,7 @@ const Container = styled.div`
   overflow: hidden;
   display: flex;
   align-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
 `
