@@ -17,6 +17,7 @@
     "react-final-form": "^6.3.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "screenfull": "^5.0.0",
     "yup": "^0.27.0"
   },
   "scripts": {

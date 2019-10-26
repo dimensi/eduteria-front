@@ -1,16 +1,20 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/core'
-import { useStore } from 'effector-react'
+import { useStore, useList } from 'effector-react'
+import screenfull from 'screenfull'
 
 import {
   played,
   $currentSlide,
   $playing,
-  stopped,
-  backwarded,
-  forwarded,
   $history,
+  $fullScreen,
+  fullScreenEntered,
+  fullScreenExited,
+  $controls,
+  $leftControls,
+  $rightControls,
 } from '../store/player'
 import { ReactComponent as PlayIcon } from '../assets/play.svg'
 import { ReactComponent as MuteIcon } from '../assets/mute.svg'
@@ -19,7 +23,7 @@ import { ReactComponent as ForwardIcon } from '../assets/forward.svg'
 import { ReactComponent as BackwardIcon } from '../assets/backward.svg'
 import { ReactComponent as PauseIcon } from '../assets/pause.svg'
 import { ReactComponent as EnterFullScreenIcon } from '../assets/enter-fullscreen.svg'
-import { ReactComponent as ExitFullScreen } from '../assets/exit-fullscreen.svg'
+import { ReactComponent as ExitFullScreenIcon } from '../assets/exit-fullscreen.svg'
 import { WidgetRender } from './WidgetRender'
 
 const Container = styled.div`
@@ -109,20 +113,38 @@ const Control = styled.button`
   }
 `
 
-const controls = [
-  { id: 'play', icon: PlayIcon },
-  { id: 'mute', icon: MuteIcon },
-  { id: 'forward', icon: ForwardIcon },
-  { id: 'backward', icon: BackwardIcon },
-]
+const controls = {
+  play: { Icon: PauseIcon },
+  pause: { Icon: PlayIcon },
+  forward: { Icon: ForwardIcon },
+  backward: { Icon: BackwardIcon },
+  fullScreenExit: { Icon: ExitFullScreenIcon },
+  fullScreenEnter: { Icon: EnterFullScreenIcon },
+}
 
+const SideControls = ({ store }) =>
+  useList(store, control => {
+    const Icon = controls[control.type].Icon
+    return (
+      <Control onClick={control.event} key={control.type}>
+        <Icon />
+      </Control>
+    )
+  })
 export function ControlContainer() {
+  const contrainerRef = useRef(null)
   const slide = useStore($currentSlide)
   const playing = useStore($playing)
-  const history = useStore($history)
-  console.log(playing, slide)
+  const isInFullScreen = useStore($fullScreen)
+  useEffect(() => {
+    if (isInFullScreen && screenfull.isEnabled) {
+      screenfull.request(contrainerRef.current)
+    } else {
+      screenfull.exit(contrainerRef.current)
+    }
+  }, [isInFullScreen])
   return (
-    <Container style={{ background: playing !== 'initial' && 'black' }}>
+    <Container style={{ background: playing !== 'initial' && 'black' }} ref={contrainerRef}>
       <AspectRationContainer>
         {slide?.Widgets && (
           <WidgetHolder>
@@ -138,33 +160,10 @@ export function ControlContainer() {
       {playing !== 'initial' && (
         <ControlsHolder>
           <div css={ControlSide}>
-            {history.length > 1 && (
-              <Control onClick={backwarded}>
-                <BackwardIcon />
-              </Control>
-            )}
-            {playing === 'pause' ? (
-              <Control onClick={played}>
-                <PlayIcon />
-              </Control>
-            ) : (
-              <Control onClick={stopped}>
-                <PauseIcon />
-              </Control>
-            )}
-            {slide.NextSlideID && (
-              <Control onClick={() => forwarded(slide.NextSlideID)}>
-                <ForwardIcon />
-              </Control>
-            )}
+            <SideControls store={$leftControls} />
           </div>
           <RightControlSide css={ControlSide}>
-            <Control>
-              <VolumeIcon />
-            </Control>
-            <Control>
-              <EnterFullScreenIcon />
-            </Control>
+            <SideControls store={$rightControls} />
           </RightControlSide>
         </ControlsHolder>
       )}
