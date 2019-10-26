@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
-import { css } from '@emotion/core'
+import { css, Global } from '@emotion/core'
 import { useStore, useList } from 'effector-react'
 import screenfull from 'screenfull'
 
@@ -28,6 +28,11 @@ const Container = styled.div`
   overflow: hidden;
   display: flex;
   align-content: center;
+`
+
+const fullScreen = css`
+  width: 100%;
+  height: 100%;
 `
 
 export const AspectRationContainer = styled.div`
@@ -150,8 +155,25 @@ export function ControlContainer() {
       screenfull.exit()
     }
   }, [isInFullScreen])
+  console.log(screenfull.isEnabled)
   return (
-    <Container style={{ background: playing !== 'initial' && 'black' }} ref={contrainerRef}>
+    <Container
+      style={{ background: playing !== 'initial' && 'black' }}
+      css={isInFullScreen && !screenfull.isEnabled ? fullScreen : undefined}
+      ref={contrainerRef}
+    >
+      {isInFullScreen && !screenfull.isEnabled && (
+        <Global
+          styles={css`
+            html,
+            body,
+            #root {
+              height: 100%;
+              width: 100%;
+            }
+          `}
+        />
+      )}
       <AspectRationContainer>
         {slide?.Widgets && (
           <WidgetHolder>

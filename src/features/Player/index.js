@@ -9,12 +9,14 @@ export function Player({
   match: {
     params: { id },
   },
+  location: { search },
 }) {
   const store = useStore($presentationStore)
+  const query = Object.fromEntries(new URLSearchParams(search))
   console.log(store)
   return (
     <>
-      <PlayerGate id={id} />
+      <PlayerGate id={id} {...query} />
       {!store.loading && store.presentation && <ControlContainer />}
     </>
   )
