@@ -11,7 +11,7 @@ const mapResult = (_, { result }) => ({
   id: result.PresentationID,
   name: result.PresentationName,
   slides: result.Slides,
-  startId: result.StartSlideId,
+  startId: result.StartSlideID,
 })
 
 export const $presentation = createStore(null)

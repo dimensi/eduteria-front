@@ -21,7 +21,7 @@ export const getPresentation = async ({ id }) => {
         name: 'PresentationDescription',
       },
       {
-        name: 'StartSlideId',
+        name: 'StartSlideID',
       },
       {
         name: 'Slides',

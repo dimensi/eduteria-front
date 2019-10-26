@@ -1,10 +1,13 @@
 import React from 'react'
 import css from '@emotion/css'
 
+import { ButtonWidget } from 'src/features/Player/components/ButtonWidget'
+
 import { VideoWidget } from './VideoWidget'
 
 const mapWidgets = {
   Video: VideoWidget,
+  Button: ButtonWidget,
 }
 
 export function WidgetRender({ widgets }) {
