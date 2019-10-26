@@ -29,9 +29,6 @@ const Container = styled.div`
   overflow: hidden;
   display: flex;
   align-content: center;
-`
-
-const fullScreen = css`
   width: 100%;
   height: 100%;
 `
@@ -167,23 +164,17 @@ export function ControlContainer() {
   }, [isInFullScreen])
   console.log('current slide', slide, playing)
   return (
-    <Container
-      style={{ background: playing !== 'initial' && 'black' }}
-      css={isInFullScreen && !screenfull.isEnabled ? fullScreen : undefined}
-      ref={contrainerRef}
-    >
-      {isInFullScreen && !screenfull.isEnabled && (
-        <Global
-          styles={css`
-            html,
-            body,
-            #root {
-              height: 100%;
-              width: 100%;
-            }
-          `}
-        />
-      )}
+    <Container style={{ background: playing !== 'initial' && 'black' }} ref={contrainerRef}>
+      <Global
+        styles={css`
+          html,
+          body,
+          #root {
+            height: 100%;
+            width: 100%;
+          }
+        `}
+      />
       <AspectRationContainer>
         {slide?.Widgets && (
           <WidgetHolder>
