@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useRef, useLayoutEffect } from 'react'
 import styled from '@emotion/styled'
 import { useStore } from 'effector-react'
 
@@ -15,7 +15,7 @@ export function VideoWidget({ Source: { Src, ContentType }, WidgetID, className 
   const isMuted = useStore($muted)
   const ref = useRef(null)
   const promise = useRef(null)
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!ref.current) return
     if (playing === 'play' && ref.current.paused) {
       promise.current = ref.current.play()
@@ -36,7 +36,7 @@ export function VideoWidget({ Source: { Src, ContentType }, WidgetID, className 
     ref.current.muted = isMuted
   }, [playing, isMuted])
   return (
-    <Video controls={false} key={WidgetID} className={className} ref={ref}>
+    <Video controls={false} key={WidgetID} className={className} ref={ref} playsInline>
       <source src={Src} type={ContentType} />
     </Video>
   )
