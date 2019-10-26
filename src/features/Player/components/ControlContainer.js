@@ -142,6 +142,7 @@ export function ControlContainer() {
   const playing = useStore($playing)
   const isInFullScreen = useStore($fullScreen)
   useEffect(() => {
+    if (!contrainerRef.current) return
     if (isInFullScreen && screenfull.isEnabled) {
       screenfull.request(contrainerRef.current)
     } else {
