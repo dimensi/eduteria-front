@@ -24,9 +24,23 @@ export const getPresentation = async ({ id }) => {
         name: 'StartSlideID',
       },
       {
+        name: 'PresentationViewID',
+      },
+      {
         name: 'Slides',
         type: 'json',
       },
     ],
   })).recordset[0]
+}
+
+export const sendEventToBack = async ({ viewId, widgetId, order }) => {
+  return recordApi({
+    procedure: 'Api.PresentationEvent',
+    parameters: [
+      { name: 'PresentationViewID', value: viewId },
+      { name: 'WidgetID', value: widgetId },
+      { name: 'Order', value: order },
+    ],
+  })
 }

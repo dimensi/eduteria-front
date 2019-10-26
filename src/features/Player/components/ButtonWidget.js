@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-import { forwarded } from 'src/features/Player/store/player'
+import { forwardedFromWidget } from 'src/features/Player/store/player'
 
 const Button = styled.button`
   position: absolute;
@@ -13,8 +13,12 @@ const Button = styled.button`
   line-height: 1;
 `
 
-export function ButtonWidget({ WidgetName, NextSlideID, className }) {
+export function ButtonWidget({ WidgetName, WidgetID, NextSlideID, className }) {
   return (
-    <Button className={className} children={WidgetName} onClick={() => forwarded(NextSlideID)} />
+    <Button
+      className={className}
+      children={WidgetName}
+      onClick={() => forwardedFromWidget({ slideId: NextSlideID, widgetId: WidgetID })}
+    />
   )
 }

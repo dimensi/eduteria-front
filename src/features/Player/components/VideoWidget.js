@@ -2,7 +2,12 @@ import React, { useRef, useLayoutEffect } from 'react'
 import styled from '@emotion/styled'
 import { useStore } from 'effector-react'
 
-import { $playing, $muted, $currentSlide, forwarded } from 'src/features/Player/store/player'
+import {
+  $playing,
+  $muted,
+  $currentSlide,
+  forwardedFromWidget,
+} from 'src/features/Player/store/player'
 
 const Video = styled.video`
   position: absolute;
@@ -43,7 +48,11 @@ export function VideoWidget({ Source: { Src, ContentType }, WidgetID, className 
       className={className}
       ref={ref}
       playsInline
-      onEnded={() => (slide.NextSlideID ? forwarded(slide.NextSlideID) : undefined)}
+      onEnded={() => {
+        if (slide.NextSlideID) {
+          forwardedFromWidget({ slideId: slide.NextSlideID, widgetId: WidgetID })
+        }
+      }}
     >
       <source src={Src} type={ContentType} />
     </Video>
