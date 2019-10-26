@@ -10,6 +10,7 @@ const Button = styled.button`
   background: none;
   padding: 0;
   font-family: inherit;
+  line-height: 1;
 `
 
 export function ButtonWidget({ WidgetName, NextSlideID, className }) {
