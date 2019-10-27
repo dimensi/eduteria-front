@@ -1,9 +1,13 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
+const Container = styled.div`
+  display: flex;
+  flex-flow: column;
+`
 const BarContainer = styled.div`
   width: 100%;
-  height: 30px;
+  flex: 1;
   overflow: hidden;
 `
 const BarLine = styled.div`
@@ -15,7 +19,8 @@ const BarTitle = styled.div`
   font-size: inherit;
   color: currentColor;
   position: relative;
-  margin-bottom: 0.1em;
+  margin-bottom: 0.3em;
+  flex: 0 0 auto;
 `
 
 const colors = [
@@ -34,7 +39,7 @@ const colors = [
 
 export function StatisticBarWidget({ WidgetName, Percent, className, index }) {
   return (
-    <div className={className}>
+    <Container className={className}>
       <BarTitle>{WidgetName}</BarTitle>
       <BarContainer>
         <BarLine
@@ -44,7 +49,7 @@ export function StatisticBarWidget({ WidgetName, Percent, className, index }) {
           }}
         />
       </BarContainer>
-    </div>
+    </Container>
   )
 }
 
