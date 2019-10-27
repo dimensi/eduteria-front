@@ -21,7 +21,7 @@ export const $presentation = createStore(null)
 
 const $loading = createStore(true)
   .on(fxGetPresentation, () => true)
-  .on(merge([fxGetPresentation.done, fxGetPresentation.fail]), () => false)
+  .on(fxGetPresentation.finally, () => false)
 
 export const $presentationStore = createStoreObject({
   presentation: $presentation,
