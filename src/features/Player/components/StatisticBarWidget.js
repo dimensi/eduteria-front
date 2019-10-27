@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 
 const Container = styled.div`
   display: flex;
+  position: absolute;
   flex-flow: column;
 `
 const BarContainer = styled.div`
