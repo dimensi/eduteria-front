@@ -163,7 +163,7 @@ export function ControlContainer() {
       screenfull.exit()
     }
   }, [isInFullScreen])
-  console.log('current slide', slide, playing)
+  slide && console.log('current slide: %s', slide.SlideID)
   return (
     <Container style={{ background: playing !== 'initial' && 'black' }} ref={contrainerRef}>
       <Global

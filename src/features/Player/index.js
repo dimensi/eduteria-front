@@ -13,7 +13,6 @@ export function Player({
 }) {
   const store = useStore($presentationStore)
   const query = Object.fromEntries(new URLSearchParams(search))
-  console.log(store)
   return (
     <>
       <PlayerGate id={id} {...query} />

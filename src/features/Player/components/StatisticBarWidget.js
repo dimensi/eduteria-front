@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 
 const BarContainer = styled.div`
   width: 100%;
-  height: 50px;
+  height: 30px;
   overflow: hidden;
 `
 const BarLine = styled.div`
@@ -32,7 +32,7 @@ const colors = [
   '#abb7b7',
 ]
 
-export function StatisticBarWidget({ WidgetName, className, index }) {
+export function StatisticBarWidget({ WidgetName, Percent, className, index }) {
   return (
     <div className={className}>
       <BarTitle>{WidgetName}</BarTitle>
@@ -40,7 +40,7 @@ export function StatisticBarWidget({ WidgetName, className, index }) {
         <BarLine
           style={{
             backgroundColor: colors[index % colors.length],
-            transform: `translateX(${Math.floor(Math.random() * 100) - 100}%)`,
+            transform: `translateX(${Percent - 100}%)`,
           }}
         />
       </BarContainer>
