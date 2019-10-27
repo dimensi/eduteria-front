@@ -10,6 +10,7 @@ import {
 } from 'effector'
 
 import { sendEventToBack } from 'src/features/Player/api'
+
 import { $presentation, PlayerGate, resetPlayer } from './index'
 
 export const played = createEvent()
