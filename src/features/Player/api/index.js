@@ -7,7 +7,7 @@ export const getPresentation = async ({ id }) => {
       {
         name: 'ID',
         type: 'bigint',
-        value: 662774,
+        value: id,
       },
     ],
     columns: [
