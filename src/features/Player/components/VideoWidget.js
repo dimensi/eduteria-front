@@ -15,7 +15,7 @@ const Video = styled.video`
   left: 0;
 `
 
-export function VideoWidget({ Source: { Src, ContentType }, WidgetID, className }) {
+export function VideoWidget({ Source: { Src, ContentType }, WidgetID, Poster, className }) {
   const playing = useStore($playing)
   const isMuted = useStore($muted)
   const slide = useStore($currentSlide)
@@ -48,6 +48,7 @@ export function VideoWidget({ Source: { Src, ContentType }, WidgetID, className 
       className={className}
       ref={ref}
       playsInline
+      poster={Poster}
       onEnded={() => {
         if (slide.NextSlideID) {
           forwardedFromWidget({ slideId: slide.NextSlideID, widgetId: WidgetID })
